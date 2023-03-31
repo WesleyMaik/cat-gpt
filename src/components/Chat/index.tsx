@@ -6,8 +6,6 @@ import { useRef } from "react";
 import { useChat } from "@/store/chat";
 import { useForm } from "react-hook-form";
 import { useAutoAnimate } from "@formkit/auto-animate/react"
-import { OpenAIApi, Configuration } from "openai";
-import { useMutation } from "react-query";
 
 //Components
 import { Input } from "@/components/Input";
@@ -15,13 +13,13 @@ import { FiSend } from "react-icons/fi";
 import {
     Avatar,
     IconButton,
-    Spinner,
+    Image,
     Stack,
     Text
 } from "@chakra-ui/react";
 import ReactMarkdown from 'react-markdown'
 import { Instructions } from "../Layout/Instructions";
-import { useAPI } from "@/store/api";
+import Typed from 'react-typed';
 
 export interface ChatProps { };
 
@@ -30,15 +28,12 @@ interface ChatSchema {
 };
 
 export const Chat = ({ ...props }: ChatProps) => {
-    const { api } = useAPI();
     const {
         selectedChat,
         addMessage,
         addChat,
-        editChat
     } = useChat();
-    const selectedId = selectedChat?.id,
-        selectedRole = selectedChat?.role;
+    const selectedId = selectedChat?.id
 
     const hasSelectedChat = selectedChat && selectedChat?.content.length > 0;
 
@@ -55,71 +50,30 @@ export const Chat = ({ ...props }: ChatProps) => {
 
     const [parentRef] = useAutoAnimate();
 
-    const configuration = new Configuration({
-        apiKey: api
-    });
-
-    const openAi = new OpenAIApi(configuration);
-
-    const { mutate, isLoading } = useMutation({
-        mutationKey: 'prompt',
-        mutationFn: async (prompt: string) => await openAi.createChatCompletion({
-            model: 'gpt-3.5-turbo',
-            max_tokens: 256,
-            messages: [{ role: 'user', content: prompt }]
-        })
-    });
-
     const handleAsk = async ({ input: prompt }: ChatSchema) => {
         updateScroll();
-        const sendRequest = (selectedId: string) => {
+        const sendRequest = async (selectedId: string) => {
             setValue("input", "");
 
-            addMessage(selectedId, {
+            const randomNumber = Math.floor(Math.random() * 999);
+
+            await addMessage(selectedId, {
+                id: randomNumber,
                 emitter: "user",
                 message: prompt
             });
 
-            mutate(prompt, {
-                onSuccess({ status, data }, variable) {
-                    if (status === 200) {
-                        const message = String(data.choices[0].message?.content);
-                        addMessage(selectedId, {
-                            emitter: "gpt",
-                            message
-                        });
+            const countMessages = Math.floor(Math.random() * 32) + 8;
 
-                        if (selectedRole == "New chat" || selectedRole == undefined) {
-                            editChat(selectedId, { role: variable });
-                        };
-                    }
-                    updateScroll();
-                },
-                onError(error) {
-                    type Error = {
-                        response: {
-                            data: {
-                                error: {
-                                    code: "invalid_api_key" | string,
-                                    message: string
-                                };
-                            },
-                        },
-                    };
-
-                    const { response } = error as Error,
-                        message = response.data.error.message;
-                    addMessage(selectedId, {
-                        emitter: "error",
-                        message
-                    });
-                    updateScroll();
-                }
+            await addMessage(selectedId, {
+                id: randomNumber,
+                emitter: "gpt",
+                message: [...Array(countMessages)].map(() => "Meow").join(' ')
             });
         };
 
         if (selectedId) {
-            if (prompt && !isLoading) {
+            if (prompt) {
                 sendRequest(selectedId);
             };
         } else {
@@ -147,7 +101,7 @@ export const Chat = ({ ...props }: ChatProps) => {
                     height="full"
                 >
                     {(hasSelectedChat) ? (
-                        selectedChat.content.map(({ emitter, message }, key) => {
+                        selectedChat.content.map(({ id, emitter, message }, key) => {
                             const getAvatar = () => {
                                 switch (emitter) {
                                     case "gpt":
@@ -187,9 +141,28 @@ export const Chat = ({ ...props }: ChatProps) => {
                                         marginTop=".75em !important"
                                         overflow="hidden"
                                     >
-                                        <ReactMarkdown >
-                                            {getMessage()}
-                                        </ReactMarkdown>
+                                        {emitter == 'gpt' ? (
+                                            <>
+                                                <Image
+                                                    src={`https://cataas.com/cat/gif?${id}`}
+                                                    width={200}
+                                                    height={200}
+                                                    rounded={8}
+                                                    marginBottom={4}
+                                                    loading="lazy"
+                                                />
+                                                <Typed
+                                                    strings={[getMessage()]}
+                                                    typeSpeed={20}
+                                                    fadeOut
+                                                    stopped={false}
+                                                />
+                                            </>
+                                        ) : (
+                                            <ReactMarkdown>
+                                                {getMessage()}
+                                            </ReactMarkdown>
+                                        )}
                                     </Text>
                                 </Stack>
                             )
@@ -218,7 +191,7 @@ export const Chat = ({ ...props }: ChatProps) => {
                         inputRightAddon={(
                             <IconButton
                                 aria-label="send_button"
-                                icon={(!isLoading) ? (<FiSend />) : (<Spinner />)}
+                                icon={(<FiSend />)}
                                 backgroundColor="transparent"
                                 onClick={handleSubmit(handleAsk)}
                             />
