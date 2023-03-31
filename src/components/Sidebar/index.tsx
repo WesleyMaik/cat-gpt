@@ -32,9 +32,6 @@ import {
     FiUser,
     FiX
 } from "react-icons/fi";
-import {
-    APIKeyModal as APIKeyModalContent
-} from "../Layout/APIKeyModal";
 
 export interface SideBarProps {
     isResponsive?: boolean
@@ -60,11 +57,6 @@ export const Sidebar = ({ isResponsive, ...props }: SideBarProps) => {
     const {
         Modal: AccountModal,
         handleOpen: handleOpenAccountModal
-    } = useModal();
-    const {
-        Modal: APIKeyModal,
-        handleOpen: handleOpenAPIKeyModal,
-        handleClose: handleCloseAPIKeyModal
     } = useModal();
 
     useEffect(() => {
@@ -262,16 +254,6 @@ export const Sidebar = ({ isResponsive, ...props }: SideBarProps) => {
                             backgroundColor: "blackAlpha.300"
                         }}
                     >Log Out</Button>
-                    <Button
-                        leftIcon={<FiKey />}
-                        padding={2}
-                        justifyContent="flex-start"
-                        backgroundColor="transparent"
-                        onClick={handleOpenAPIKeyModal}
-                        _hover={{
-                            backgroundColor: "blackAlpha.300"
-                        }}
-                    >Change API Key</Button>
                 </Stack>
             </Stack>
             <AccountModal title="Your account">
@@ -307,7 +289,7 @@ export const Sidebar = ({ isResponsive, ...props }: SideBarProps) => {
                         <Stack direction="row">
                             <Heading
                                 size="md"
-                            >ChatGPT Plus</Heading>
+                            >CatGPT Plus</Heading>
                             <Heading
                                 color="purple.400"
                                 size="md"
@@ -329,13 +311,6 @@ export const Sidebar = ({ isResponsive, ...props }: SideBarProps) => {
                     </Stack>
                 </Stack>
             </AccountModal>
-            <APIKeyModal
-                title="API Key"
-            >
-                <APIKeyModalContent
-                    onConfirm={handleCloseAPIKeyModal}
-                />
-            </APIKeyModal>
         </>
     );
 };
