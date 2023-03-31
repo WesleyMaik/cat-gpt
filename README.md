@@ -1,16 +1,16 @@
-# ChatGPT UI Clone
+# CatGPT UI Clone 🐱
 
-A clone of the ChatGPT website UI
-demo: https://wesleymaik.github.io/chatgpt-ui-clone
+A parody of [clone of the ChatGPT](https://wesleymaik.github.io/chatgpt-ui-clone) website UI
+
+## demo: https://wesleymaik.github.io/cat-gpt
 
 ---
 
 <div align="center">
 
 ![screenshot-web](./docs/screenshot-1.png)
-![screenshot-mobile](./docs/screenshot-2.png)
 
-## </div>
+</div>
 
 ## Requirements
 
@@ -21,16 +21,14 @@ demo: https://wesleymaik.github.io/chatgpt-ui-clone
 
 - ViteJS (React)
 - ChakraUI
-- React Query
 - Zustand
-- OpenAI API
 
 ## Getting Started
 
 1. Clone the project
 
 ```
-git clone https://github.com/WesleyMaik/chatgpt-ui-clone
+git clone https://github.com/WesleyMaik/cat-gpt
 ```
 
 2. Install dependencies
@@ -45,15 +43,7 @@ or
 yarn install
 ```
 
-3. Environment (important)
-   Create an .env file at the root of the project with the following key:
-
-```
-//.env
-VITE_CHATGPT_SECRET_KEY = your OpenAI API key
-```
-
-4. Run 🔥
+3. Run 🔥
 
 ```
 npm run dev
@@ -72,4 +62,9 @@ yarn dev
 Feedback is appreciated! Reach out on [Twitter](https://twitter.com/euwesleymaik), [Instagram](https://twitter.com/euwesleymaik) or submit a new issue!
 
 ---
+
+### Inspired by https://www.cat-gpt.com
+
+---
+
 "ChatGPT", "OpenAI" and its respective logos are owned by OpenAI Inc. All rights are reserved by the company. My intention with the project is just for study and no monetization is being generated from it.
