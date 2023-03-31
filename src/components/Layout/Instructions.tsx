@@ -1,6 +1,6 @@
 import { Stack, Heading, Icon, Button, Text } from "@chakra-ui/react";
 import { IconType } from "react-icons";
-import { FiAlertTriangle, FiSun, FiZap } from "react-icons/fi";
+import { TbCat } from "react-icons/tb";
 
 type Introdution = {
     icon: IconType,
@@ -15,7 +15,7 @@ export interface IInstructionsProps {
 export const Instructions = ({ onClick }: IInstructionsProps) => {
     const introdution: Introdution[] = [
         {
-            icon: FiSun,
+            icon: TbCat,
             name: "Examples",
             list: [
                 "Explain quantum computing in simple terms",
@@ -24,7 +24,7 @@ export const Instructions = ({ onClick }: IInstructionsProps) => {
             ]
         },
         {
-            icon: FiZap,
+            icon: TbCat,
             name: "Capabilities",
             list: [
                 "Remembers what user said earlier in the conversation",
@@ -33,7 +33,7 @@ export const Instructions = ({ onClick }: IInstructionsProps) => {
             ]
         },
         {
-            icon: FiAlertTriangle,
+            icon: TbCat,
             name: "Limitations",
             list: [
                 "May occasionally generate incorrect information",
@@ -53,7 +53,7 @@ export const Instructions = ({ onClick }: IInstructionsProps) => {
             <Heading
                 size="lg"
                 marginY={8}
-            >ChatGPT</Heading>
+            >CatGPT</Heading>
             <Stack
                 direction={["column", "column", "row"]}
             >
