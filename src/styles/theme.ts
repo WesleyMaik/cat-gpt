@@ -10,8 +10,15 @@ const Button = defineStyleConfig({
     }
 });
 
+const colors = {
+    gray: {
+        800: '#444654'
+    }
+}
+
 export const theme = extendTheme({
     config,
+    colors,
     components: {
         Button,
     }
