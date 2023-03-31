@@ -21,6 +21,7 @@ type Chat = {
 };
 
 type ChatContent = {
+    id: number,
     emitter: ChatContentEmmiter,
     message: string
 };
@@ -42,12 +43,14 @@ const initialChatState: Chat[] = getSafeSavedChats() || [
         role: 'About this website',
         content: [
             {
+                id: 0,
                 emitter: "user",
                 message: "What website is this?"
             },
             {
+                id: 1,
                 emitter: "gpt",
-                message: "This website is a clone of the ChatGPT website interface created by @WesleyMaik.\n\nYou can also send commands to the original site, with the help of the official ChatGPT API."
+                message: "Meow meow meow meow @WesleyMaik."
             }
         ],
     },
@@ -58,10 +61,6 @@ const initialChatState: Chat[] = getSafeSavedChats() || [
             {
                 emitter: "user",
                 message: "Follow me on \nTwitter [@euwesleymaik](https://twitter.com/euwesleymaik)\nInstagram [eumaik_](https://instagram.com/eumaik_)\nGitHub [WesleyMaik](https://github.com/wesleymaik)"
-            },
-            {
-                emitter: "gpt",
-                message: "Thanks!"
             }
         ],
     }
